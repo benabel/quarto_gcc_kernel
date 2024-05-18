@@ -13,9 +13,9 @@ from jupyter_client.kernelspec import KernelSpecManager
 from tempfile import TemporaryDirectory
 
 kernel_json = {
-    "argv": [sys.executable, "-m", "echo_kernel", "-f", "{connection_file}"],
-    "display_name": "Echo",
-    "language": "text",
+    "argv": [sys.executable, "-m", "gcc_kernel", "-f", "{connection_file}"],
+    "display_name": "Gcc",
+    "language": "c",
 }
 
 class CustomHook(BuildHookInterface):
@@ -38,5 +38,5 @@ class CustomHook(BuildHookInterface):
                 except FileNotFoundError:
                     print("Custom logo files not found. Default logos will be used.")
             shutil.copy(os.path.join(cur_path, "quarto_setup_cell"), td)
-            KernelSpecManager().install_kernel_spec(td, 'echo', user=False, prefix=prefix)
+            KernelSpecManager().install_kernel_spec(td, 'gcc', user=False, prefix=prefix)
 

@@ -1,4 +1,4 @@
-# Changes in echo kernel
+# Changes in gcc kernel
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
@@ -7,7 +7,7 @@
 [on
 GitHub](https://github.com/jupyter/jupyter_core/releases/tag/1.1)
 
-- Add ``--sys-prefix`` argument
+- Add `--sys-prefix` argument
 
 <!-- <END NEW CHANGELOG ENTRY> -->
 

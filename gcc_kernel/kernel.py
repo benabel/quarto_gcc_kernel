@@ -1,16 +1,17 @@
 from ipykernel.kernelbase import Kernel
+from .compile_run_c import compile_run_c
 
-class EchoKernel(Kernel):
-    implementation = 'Echo'
+class GccKernel(Kernel):
+    implementation = 'Gcc'
     implementation_version = '1.0'
-    language = 'no-op'
+    language = 'c'
     language_version = '0.1'
     language_info = {
-        'name': 'echo',
-        'mimetype': 'text/plain',
-        'file_extension': '.txt',
+        'name': 'gcc',
+        'mimetype': 'text/x-c',
+        'file_extension': '.c',
     }
-    banner = "Echo kernel - as useful as a parrot"
+    banner = "Gcc kernel - as useful as a parrot"
 
     # In order to receive metadata information from Quarto,
     # a kernel must implement the `comm_open` handler
@@ -29,8 +30,14 @@ class EchoKernel(Kernel):
     def do_execute(self, code, silent, store_history=True, 
                    user_expressions=None,
                    allow_stdin=False):
+        # This is where the kernel executes code
+        # In a real kernel, you would call the appropriate
+        # code execution library here (e.g. a C compiler)
+        # and return the result
+        # run c compiler and stream output
+
         if not silent:
-            stream_content = {'name': 'stdout', 'text': code}
+            stream_content = {'name': 'stdout', 'text': compile_run_c(code)}
             self.send_response(self.iopub_socket, 'stream', stream_content)
 
         # in this example, we are using a very simple way to
@@ -44,7 +51,7 @@ class EchoKernel(Kernel):
             # (except for the metadata). Still, `execute_result` needs
             # something to send, so we send an empty string
             self.send_response(self.iopub_socket, 'execute_result', {
-                "data": {"text/plain": ""}, 
+                "data": {"text/x-c": ""}, 
                 "metadata": {'quarto': {'daemonize': True}},
                 'execution_count': self.execution_count,
                 })
