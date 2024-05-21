@@ -1,18 +1,10 @@
 quarto_gcc_kernel
 ==================
 
-This is a fork of the gcc_kernel from the Jupyter project. 
-It is intended to be used as a simple example of a Jupyter kernel that can take advantage of the specific ways in which Quarto communicates additional information during execution.
-
-Below, you will find the original README from the `gcc_kernel <https://github.com/jupyter/gcc_kernel/>`_ project.
-
-gcc_kernel
------------
-
-``gcc_kernel`` is a simple example of a Jupyter kernel. This repository
-complements the documentation on wrapper kernels here:
-
-http://jupyter-client.readthedocs.io/en/latest/wrapperkernels.html
+This is a fork of the
+`quarto_echo_kernel <https://github.com/quarto-dev/quarto_echo_kernel>`_
+project. It is a simple example of a Jupyter kernel that runs the GNU Compiler
+Collection (GCC) to compile and run C code.
 
 Installation
 ------------
@@ -27,12 +19,10 @@ To install ``gcc_kernel`` from PyPI::
 From Git using Conda
 ~~~~~~~~~~~~~~~~~~~~
 
-To install ``gcc_kernel`` from git into a Conda environment::
+To install ``gcc_kernel`` from git::
 
     git clone https://github.com/jupyter/gcc_kernel
     cd gcc_kernel
-    conda create -n ker jupyter
-    conda activate ker
     pip install .
 
 
@@ -42,3 +32,26 @@ Using the Gcc kernel
 
 **Console frontends**: To use it with the console frontends, add ``--kernel gcc`` to
 their command line arguments.
+
+Configuration
+-------------
+
+Currently, the kernel can't be configured and will always use:
+
+- ``-std=c99`` for C code
+- Wrap the code in a ``main`` function if it doesn't already have one with:
+
+  ```c
+  #include <assert.h>
+  #include <stdbool.h>
+  #include <stddef.h>
+  #include <stdint.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  ```
+
+Contributing
+------------
+
+I use this project for my courses and just fit my needs. If you want to improve
+it to fit yours, your contributions are welcome:)
