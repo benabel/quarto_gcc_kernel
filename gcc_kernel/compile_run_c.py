@@ -1,28 +1,22 @@
 import subprocess
 from shlex import split
 import os
-import ast
+import re
 
 
 def has_main_function(c_code):
-    """Checks if a text string c_code defines a main function.
-
-    Args:
-      c_code: A string containing C code.
-
-    Returns:
-      True if a main function is found, False otherwise.
     """
-    try:
-        tree = ast.parse(c_code)
-    except SyntaxError:
+    Check if there is a main function in the given C code.
+    """
+    # Check if there is at least one line starting with #include
+    if not re.search(r"^\s*#include", c_code, re.MULTILINE):
         return False
 
-    # Look for FunctionDef nodes with name 'main'
-    for node in ast.walk(tree):
-        if isinstance(node, ast.FunctionDef) and node.name == "main":
-            return True
-    return False
+    # Search for main function definition
+    main_func_pattern = r"^\s*(int|void)\s+main\s*\(([^)]*)\)\s*{(?s:.*?)}"
+    main_func_match = re.search(main_func_pattern, c_code, re.MULTILINE)
+
+    return bool(main_func_match)
 
 
 def compile_run_c(c_code: str):

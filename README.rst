@@ -9,21 +9,13 @@ Collection (GCC) to compile and run C code.
 Installation
 ------------
 
-From PyPI
-~~~~~~~~~
-
-To install ``gcc_kernel`` from PyPI::
-
-    pip install gcc_kernel
+Not published to Pypi, you can install it from github:
     
-From Git using Conda
-~~~~~~~~~~~~~~~~~~~~
+    pip install https://github.com/benabel/quarto_gcc_kernel/archive/main.zip
 
-To install ``gcc_kernel`` from git::
+You can verify the installation with:
 
-    git clone https://github.com/jupyter/gcc_kernel
-    cd gcc_kernel
-    pip install .
+    jupyter kernelspec list
 
 
 Using the Gcc kernel
