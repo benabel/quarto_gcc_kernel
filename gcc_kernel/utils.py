@@ -4,6 +4,22 @@ import os
 import re
 
 
+def handle_metadata(cell_code: str):
+    # Define regular expression pattern for metadata
+    metadata_pattern = r'^//\| (\w+): (.*)$'
+
+    # Split string into metadata and code
+    metadata_lines, code = re.split(r'(?m)^(?!\/\/\|)', cell_code, maxsplit=1)
+
+    # Extract metadata dictionary from metadata lines
+    metadata_dict = {}
+    for line in metadata_lines.split('\n'):
+        match = re.match(metadata_pattern, line)
+        if match:
+            metadata_dict[match.group(1)] = match.group(2)
+    return metadata_dict, code
+
+
 def has_main_function(c_code):
     """
     Check if there is a main function in the given C code.
@@ -19,7 +35,7 @@ def has_main_function(c_code):
     return bool(main_func_match)
 
 
-def compile_run_c(c_code: str):
+def compile_run_c(c_code: str, metadata_dict: dict):
     if not has_main_function(c_code):
         c_code = f"""#include <assert.h>
 #include <stdbool.h>
@@ -49,7 +65,8 @@ return 0;
         # Step 2: Run the compiled executable
         run_command = ["./test_code"]
         run_process = subprocess.run(
-            run_command, check=True, capture_output=True, text=True
+            run_command, check=True, capture_output=True, text=True,
+            input=metadata_dict.get("stdin")
         )
         print("Program output:", run_process.stdout)
 

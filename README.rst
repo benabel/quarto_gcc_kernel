@@ -1,5 +1,7 @@
-quarto_gcc_kernel
+quarto_gcc_kernelf
 ==================
+
+**This kernel has been abandoned in favor of [`jupygcc`](https://github.com/benabel/jupygcc) magic.**
 
 This is a fork of the
 `quarto_echo_kernel <https://github.com/quarto-dev/quarto_echo_kernel>`_
@@ -41,6 +43,19 @@ Currently, the kernel can't be configured and will always use:
   #include <stdio.h>
   #include <stdlib.h>
   ```
+
+Cell metadata
+-------------
+
+Currently, the only cell metadata handled is `stdin` for non-interactive `scanf` calls:
+
+```{c}
+//| stdin: 10
+int n;
+printf("How many lines? ");
+scanf("%d", &n);
+printf("\n%d lines\n");
+```
 
 Contributing
 ------------

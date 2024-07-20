@@ -1,5 +1,5 @@
 from ipykernel.kernelbase import Kernel
-from .compile_run_c import compile_run_c
+from .utils import compile_run_c, handle_metadata
 
 
 class GccKernel(Kernel):
@@ -37,11 +37,11 @@ class GccKernel(Kernel):
         # code execution library here (e.g. a C compiler)
         # and return the result
         # run c compiler and stream output
-
+        metadata_dict, code = handle_metadata(code)
         if not silent:
             stream_content = {
                 "name": "stdout",
-                "text": compile_run_c(code),
+                "text": compile_run_c(code, metadata_dict),
             }
             self.send_response(self.iopub_socket, "stream", stream_content)
 
